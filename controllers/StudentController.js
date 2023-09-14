@@ -1,5 +1,6 @@
 const { request } = require('express');
 const Student = require('../models/Aluno');
+const { where } = require('sequelize');
 
 const getStudents = async function(request,response) {
     
@@ -18,7 +19,6 @@ const getStudents = async function(request,response) {
 }
 
 const createStudent = async function(aluno,response) {
-
     const newStudent = await Student.create({
         name:aluno.name,
         cpf:aluno.cpf
@@ -27,4 +27,15 @@ const createStudent = async function(aluno,response) {
    // response.status(201).json(newStudent);
 }
 
-module.exports = {getStudents,createStudent}
+const updateStudent = async function(aluno,response) {
+    const newStudent = await Student.update({
+        name:aluno.name,
+        cpf:aluno.cpf
+    },{where:{id:aluno.id}});
+}
+
+const deleteStudent = async function(aluno,response) {
+    await Student.destroy({where:{id:aluno.id}});
+}
+
+module.exports = {getStudents,createStudent,updateStudent,deleteStudent}
