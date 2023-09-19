@@ -5,6 +5,15 @@ const Student = connection.sequelize.define('Students',{
         type:connection.Sequelize.STRING
     },
 
+    email:{
+        type:connection.Sequelize.STRING
+    },
+
+    RA:{
+        type:connection.Sequelize.INTEGER,
+        primaryKey:true
+    },
+
     cpf:{
         type:connection.Sequelize.INTEGER
     }

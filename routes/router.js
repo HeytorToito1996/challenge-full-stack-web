@@ -19,11 +19,11 @@ router.post('/cadastrarAluno',async function(request,response) {
    try {
     const aluno = {
         name:request.body.name,
-        cpf: request.body.cpf
+        cpf: request.body.cpf,
+        ra: request.body.RA,
+        email:request.body.email
     }
     const newStudent = await controllers.createStudent(aluno);
-    console.log('Aluno Cadastrado com Sucesso');
-
    } 
    catch (error) {
     console.error('Ocorreu um problema ao cadastrar este aluno', error);
@@ -31,16 +31,16 @@ router.post('/cadastrarAluno',async function(request,response) {
    }
 })
 
-router.get('/editaAluno/:ra',function(request,response) {
-    response.send('Aqui é onde aparecerá o formulário para edição do cadastro de um determinado aluno');
+router.get('/editaAluno/:ra',async function(request,response) {
+    let RA = request.params.ra;
+    await controllers.getStudent(request,response,RA);
 })
 
 router.post('/editarAluno/',async function(request,response) {
     try {
         const student = {
             name:request.body.name,
-            cpf:request.body.cpf,
-            id:request.body.id
+            email:request.body.email
         }
         const newStudent = await controllers.updateStudent(student);
         console.log('Aluno Atualizado com Sucesso');
@@ -50,12 +50,13 @@ router.post('/editarAluno/',async function(request,response) {
     }
 });
 
-router.get('/excluirAluno/:id',async function(request,response){
+router.get('/excluirAluno/:ra',async function(request,response){
     try {
         const student = {
             name:request.body.name,
-            cpf:request.body.cpf,
-            id:request.params.id
+            cpf: request.body.cpf,
+            RA: request.params.ra,
+            email:request.body.email,
         }
         const deletedStudent = await controllers.deleteStudent(student);
         console.log('Aluno Excluído com Sucesso');
